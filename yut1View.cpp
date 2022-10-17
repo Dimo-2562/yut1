@@ -57,7 +57,6 @@ Cyut1View::Cyut1View() noexcept
 
 	bigMovePoint_X[4] = background_x2 - 60;
 	bigMovePoint_Y[4] = background_y2 - 60;
-
 	
 	for (int i = 0; i < 4; i++) {
 		//위 줄 원 좌표 초기화
@@ -76,7 +75,6 @@ Cyut1View::Cyut1View() noexcept
 		downMovePoint_X[i] = background_x1 + 225 + i * 150;
 		downMovePoint_Y[i] = background_y2 - 65;
 	}
-
 
 	//바깥쪽 원 좌표 초기화
 	outerMovePoint_X[0] = background_x1 + 205;
@@ -103,7 +101,31 @@ Cyut1View::Cyut1View() noexcept
 
 	innerMovePoint_X[3] = background_x2 - 335;
 	innerMovePoint_Y[3] = background_y2 - 265;
-	
+
+	//말 위치 초기화
+	malFirst_X[0] = 1100;
+	malFirst_Y[0] = 450;
+
+	malFirst_X[1] = 1100;
+	malFirst_Y[1] = 550;
+
+	malFirst_X[2] = 1200;
+	malFirst_Y[2] = 450;
+
+	malFirst_X[3] = 1200;
+	malFirst_Y[3] = 550;
+
+	malSecond_X[0] = 1350;
+	malSecond_Y[0] = 450;
+
+	malSecond_X[1] = 1350;
+	malSecond_Y[1] = 550;
+
+	malSecond_X[2] = 1450;
+	malSecond_Y[2] = 450;
+
+	malSecond_X[3] = 1450;
+	malSecond_Y[3] = 550;
 }
 
 Cyut1View::~Cyut1View()
@@ -167,7 +189,6 @@ void Cyut1View::OnDraw(CDC* pDC)
 		pDC->Ellipse(outerMovePoint_X[i] - 35, outerMovePoint_Y[i] - 35, outerMovePoint_X[i] + 35, outerMovePoint_Y[i] + 35); //바깥쪽 원
 		pDC->Ellipse(innerMovePoint_X[i] - 35, innerMovePoint_Y[i] - 35, innerMovePoint_X[i] + 35, innerMovePoint_Y[i] + 35); //안쪽 원
 	}
-	
 
 	//윷 그리기
 	CBitmap bitmap;
@@ -180,18 +201,14 @@ void Cyut1View::OnDraw(CDC* pDC)
 
 	//말 그리기
 	oldBrush = pDC->SelectObject(&brushMalFirst);
-	pDC->Ellipse(1060, 410, 1140, 490);
-	pDC->Ellipse(1060, 510, 1140, 590);
-	pDC->Ellipse(1160, 410, 1240, 490);
-	pDC->Ellipse(1160, 510, 1240, 590);
+	for (int i = 0; i < 4; i++) {
+		pDC->Ellipse(malFirst_X[i] - 40, malFirst_Y[i] - 40, malFirst_X[i] + 40, malFirst_Y[i] + 40);
+	}
 
 	oldBrush = pDC->SelectObject(&brushMalSecond);
-	pDC->Ellipse(1310, 410, 1390, 490);
-	pDC->Ellipse(1310, 510, 1390, 590);
-	pDC->Ellipse(1410, 410, 1490, 490);
-	pDC->Ellipse(1410, 510, 1490, 590);
-	
-	
+	for (int i = 0; i < 4; i++) {
+		pDC->Ellipse(malSecond_X[i] - 40, malSecond_Y[i] - 40, malSecond_X[i] + 40, malSecond_Y[i] + 40);
+	}
 }
 
 

@@ -17,11 +17,17 @@ public:
 	CButton m_throwButton;
 	int background_x1, background_x2, background_y1, background_y2; // 배경 좌표
 
-	int bigMovePoint_X[5];
+	//큰 움직임 포인트
+	int bigMovePoint_X[5]; 
 	int bigMovePoint_Y[5];
 
+	//작은 움직임 포인트
 	int upMovePoint_X[4], leftMovePoint_X[4], rightMovePoint_X[4], downMovePoint_X[4], innerMovePoint_X[4], outerMovePoint_X[4];
 	int upMovePoint_Y[4], leftMovePoint_Y[4], rightMovePoint_Y[4], downMovePoint_Y[4], innerMovePoint_Y[4], outerMovePoint_Y[4];
+
+	//말의 위치
+	int malFirst_X[4], malFirst_Y[4];
+	int malSecond_X[4], malSecond_Y[4];
 
 // 작업입니다.
 public:
