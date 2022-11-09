@@ -29,6 +29,9 @@ public:
 	int malFirst_X[4], malFirst_Y[4];
 	int malSecond_X[4], malSecond_Y[4];
 
+	//윷의 상태
+	int yutStatus[4];
+
 // 작업입니다.
 public:
 
@@ -56,6 +59,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	void OnButtonClicked();
 };
 
 #ifndef _DEBUG  // yut1View.cpp의 디버그 버전

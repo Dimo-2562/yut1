@@ -4,6 +4,7 @@
 
 #include "pch.h"
 #include "framework.h"
+#include <math.h>
 // SHARED_HANDLERS는 미리 보기, 축소판 그림 및 검색 필터 처리기를 구현하는 ATL 프로젝트에서 정의할 수 있으며
 // 해당 프로젝트와 문서 코드를 공유하도록 해 줍니다.
 #ifndef SHARED_HANDLERS
@@ -27,6 +28,7 @@ BEGIN_MESSAGE_MAP(Cyut1View, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_BN_CLICKED(101, OnButtonClicked)
 	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
@@ -126,6 +128,10 @@ Cyut1View::Cyut1View() noexcept
 
 	malSecond_X[3] = 1450;
 	malSecond_Y[3] = 550;
+
+	//윷 상태 초기화
+	for (int i = 0; i < 4; i++)
+		yutStatus[i] = 0;
 }
 
 Cyut1View::~Cyut1View()
@@ -156,6 +162,7 @@ void Cyut1View::OnDraw(CDC* pDC)
 	CBrush brushMalBackground(RGB(218, 227, 243)); //윷말 배경색
 	CBrush brushMalFirst(RGB(249, 131, 148)); // 빨간말
 	CBrush brushMalSecond(RGB(143, 165, 237)); // 파란말
+	CBrush brushYutFront(RGB(255, 255, 0)); //윷의 앞
 	CBrush* oldBrush;
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
@@ -193,9 +200,13 @@ void Cyut1View::OnDraw(CDC* pDC)
 	//윷 그리기
 	CBitmap bitmap;
 	bitmap.LoadBitmap(IDB_BITMAP1);
-	CBrush brushYut(&bitmap);
-	pDC->SelectObject(&brushYut);
+	CBrush brushYutBack(&bitmap);
+	
 	for (int i = 0; i < 4; i++) {
+		if (yutStatus[i] == 0)
+			pDC->SelectObject(&brushYutBack);
+		else
+			pDC->SelectObject(&brushYutFront);
 		pDC->Rectangle(1100 + 96 * i, 100, 1150 + 96 * i, 290);
 	}
 
@@ -268,4 +279,20 @@ int Cyut1View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 
 	return 0;
+}
+
+
+void Cyut1View::OnButtonClicked()
+{
+	srand((unsigned int)(time(NULL)));
+
+	int start_number = 0, end_number = 100;
+
+	//change yutStatus
+	for (int i = 0; i < 4; i++){
+		int random_number = (rand() % (end_number - start_number + 1)) + start_number;
+		yutStatus[i] = random_number % 2;
+	}
+	
+	Invalidate();
 }
