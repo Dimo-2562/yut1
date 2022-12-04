@@ -15,22 +15,9 @@ protected: // serialization에서만 만들어집니다.
 public:
 	Cyut1Doc* GetDocument() const;
 	CButton m_throwButton;
-	int background_x1, background_x2, background_y1, background_y2; // 배경 좌표
-
-	//큰 움직임 포인트
-	int bigMovePoint_X[5]; 
-	int bigMovePoint_Y[5];
-
-	//작은 움직임 포인트
-	int upMovePoint_X[4], leftMovePoint_X[4], rightMovePoint_X[4], downMovePoint_X[4], innerMovePoint_X[4], outerMovePoint_X[4];
-	int upMovePoint_Y[4], leftMovePoint_Y[4], rightMovePoint_Y[4], downMovePoint_Y[4], innerMovePoint_Y[4], outerMovePoint_Y[4];
-
-	//말의 위치
-	int malFirst_X[4], malFirst_Y[4];
-	int malSecond_X[4], malSecond_Y[4];
-
-	//윷의 상태
-	int yutStatus[4];
+	CButton m_yutButton[5];
+	CStatic m_redTurn;
+	CStatic m_blueTurn;
 
 // 작업입니다.
 public:
@@ -60,6 +47,11 @@ protected:
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	void OnButtonClicked();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+//	virtual HRESULT accDoDefaultAction(VARIANT varChild);
+	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
+	void Wait(DWORD dwMillisecond);
 };
 
 #ifndef _DEBUG  // yut1View.cpp의 디버그 버전
@@ -67,3 +59,59 @@ inline Cyut1Doc* Cyut1View::GetDocument() const
    { return reinterpret_cast<Cyut1Doc*>(m_pDocument); }
 #endif
 
+class Mal {
+public:
+	int virtualPos; //가상의 위치
+	int x; //좌표상의 위치 - X
+	int y; //좌표상의 위치 - Y
+	int initialX;
+	int initialY;
+	int endX;
+	int endY;
+	int uID; // uID
+	bool isClicked; //클릭되었는가?
+	CButton button;
+
+	void setPos(int, int);
+	void setInitial(int, int, int, int);
+	void setID(int);
+	void checkPos(int);
+};
+
+class Circle {
+public:
+	int x;
+	int y;
+	void setPos(int, int);
+};
+
+class Map {
+public:
+	int x1;
+	int x2;
+	int y1;
+	int y2;
+	void setPos(int, int, int, int);
+};
+
+class Player {
+public:
+	bool isMyturn;
+	int moveCount;
+	int throwNum;
+	int Do;
+	int Gae;
+	int Gul;
+	int Yut;
+	int Mo;
+	int arrived;
+	void setInitial();
+};
+
+class Yut {
+public:
+	int x;
+	int y;
+	bool isFront;
+	void setPos(int, int);
+};
